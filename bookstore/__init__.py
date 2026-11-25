@@ -4,7 +4,9 @@ from pathlib import Path
 
 from flask import Flask
 
+from . import models  # noqa: F401  Loads the tables, so migrations can see them.
 from .extensions import db, migrate
+from .main import bp as main_bp
 
 MIGRATIONS_DIR = Path(__file__).resolve().parent.parent / "migrations"
 
@@ -21,9 +23,6 @@ def create_app(config_overrides=None, instance_path=None):
 
     db.init_app(app)
     migrate.init_app(app, db, directory=str(MIGRATIONS_DIR), render_as_batch=True)
-
-    from . import models  # noqa: F401  Loads the tables, so migrations can see them.
-    from .main import bp as main_bp
 
     app.register_blueprint(main_bp)
     return app
