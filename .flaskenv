@@ -1,0 +1,2 @@
+FLASK_APP=bookstore
+FLASK_DEBUG=1
